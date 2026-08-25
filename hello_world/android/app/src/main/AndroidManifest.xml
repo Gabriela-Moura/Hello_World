@@ -1,4 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.premission.ACCESS_FINE_LOCATION"/><!-- acesso mais detalhado a localização, mais preciso -->
+    <uses-permission android:name="android.premission.ACCESS_COARSE_LOCATION"/><!--acesso bruto, caso o mais detalhado não funcione -->
     <application
         android:label="hello_world"
         android:name="${applicationName}"
