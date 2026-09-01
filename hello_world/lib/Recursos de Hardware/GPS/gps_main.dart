@@ -19,10 +19,10 @@ class MyApp extends StatelessWidget {
 }
 
 class LocalizacaoPage extends StatefulWidget{
-  const LocalizacaoPage ({super.key});
+  const LocalizacaoPage({super.key});
 
   @override
-  State<LocalizacaoPage> createState()=> _LocalizacaoPageState();
+  State<LocalizacaoPage> createState() => _LocalizacaoPageState();
 }
 
 class _LocalizacaoPageState extends State<LocalizacaoPage> {
@@ -48,7 +48,6 @@ class _LocalizacaoPageState extends State<LocalizacaoPage> {
     }
 
     Position posicao = await Geolocator.getCurrentPosition();
-
     setState(() {
       latitude = posicao.latitude;
       longitude = posicao.longitude;
