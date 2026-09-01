@@ -33,7 +33,10 @@ class _LocalizacaoPageState extends State<LocalizacaoPage> {
   double latitudeDestino = -21.472989;
   double longitudeDestino = -47.017614;
 
+  //Variável que guarda a distância calculada. Inicialmente é igual a 0.
   double distancia = 0;
+  //O App inicia sem mostrar a distância entre a escola e a minha casa.
+  bool mostrarDistancia = false;
 
   Future<void> buscarLocalizacao() async{
     bool servicoAtivo = await Geolocator.isLocationServiceEnabled();
@@ -65,6 +68,9 @@ class _LocalizacaoPageState extends State<LocalizacaoPage> {
         latitudeDestino,
         longitudeDestino,
       );
+
+      //Quando a função buscarLocalizacao() for chamada, a variável mostrarDistancia será alterada para true, permitindo que a distância seja exibida na tela.
+      mostrarDistancia = true;
     });
 
     print('Latitude: $latitude');
@@ -84,50 +90,39 @@ class _LocalizacaoPageState extends State<LocalizacaoPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
 
             children: [
-              const Icon(Icons.location_on, size: 80, color: Colors.red),
+              const Icon(Icons.home, size: 80, color: Colors.purple),
 
               const SizedBox(height: 20),
 
               const Text(
-                "Localização atual",
+                "Distância entre a escola e minha casa",
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),  
               ),
-
-              const SizedBox(height: 30),
-
-              Text('Latitude: $latitude', style: const TextStyle(fontSize: 18)),
-
-              const SizedBox(height: 30),
-
-              Text('Longitude: $longitude', style: const TextStyle(fontSize: 18)),
-
-              const SizedBox(height: 30),
-
-              const Text(
-                "Destino:",
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),  
-              ),
-
-              const SizedBox(height: 30),
-
-              Text('Latitude: $latitudeDestino', style: const TextStyle(fontSize: 18)),
-
-              const SizedBox(height: 30),
-
-              Text('Longitude: $longitudeDestino', style: const TextStyle(fontSize: 18)),
 
               const SizedBox(height: 30),
 
               Text(
-                'Distância: ${(distancia / 1000).toStringAsFixed(2)} km',
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                'Clique no botão para calcular a distância',
+                style: const TextStyle(fontSize: 18),
               ),
 
               const SizedBox(height: 30),
 
               ElevatedButton(
                 onPressed: buscarLocalizacao,
-                child: const Text('Atualizar distância'),
+                child: const Text('Calcular distância'),
+              ),
+
+              const SizedBox(height: 30),
+
+              //Se mostrarDistancia for true, o Text exibirá a distância entre a escola e a minha casa. Caso contrário, nada será exibido.
+              if (mostrarDistancia)
+              Text(
+                'Distância: ${(distancia / 1000).toStringAsFixed(2)} km',
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           )
