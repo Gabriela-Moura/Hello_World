@@ -29,6 +29,12 @@ class _LocalizacaoPageState extends State<LocalizacaoPage> {
   double latitude = 0;
   double longitude = 0;
 
+  // Localização predefinida
+  double latitudeDestino = -21.472989;
+  double longitudeDestino = -47.017614;
+
+  double distancia = 0;
+
   Future<void> buscarLocalizacao() async{
     bool servicoAtivo = await Geolocator.isLocationServiceEnabled();
 
@@ -51,6 +57,14 @@ class _LocalizacaoPageState extends State<LocalizacaoPage> {
     setState(() {
       latitude = posicao.latitude;
       longitude = posicao.longitude;
+    
+      distancia = Geolocator.distanceBetween(
+        //Recebe a localiozação atual do usuário e a localização predefinida. Calcula a distância (em metros) entre elas
+        posicao.latitude,
+        posicao.longitude,
+        latitudeDestino,
+        longitudeDestino,
+      );
     });
 
     print('Latitude: $latitude');
@@ -89,9 +103,31 @@ class _LocalizacaoPageState extends State<LocalizacaoPage> {
 
               const SizedBox(height: 30),
 
+              const Text(
+                "Destino:",
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),  
+              ),
+
+              const SizedBox(height: 30),
+
+              Text('Latitude: $latitudeDestino', style: const TextStyle(fontSize: 18)),
+
+              const SizedBox(height: 30),
+
+              Text('Longitude: $longitudeDestino', style: const TextStyle(fontSize: 18)),
+
+              const SizedBox(height: 30),
+
+              Text(
+                'Distância: ${(distancia / 1000).toStringAsFixed(2)} km',
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+
+              const SizedBox(height: 30),
+
               ElevatedButton(
                 onPressed: buscarLocalizacao,
-                child: const Text('Atualizar localização'),
+                child: const Text('Atualizar distância'),
               ),
             ],
           )
